@@ -12,7 +12,8 @@ echo "Run tests with coverage"
 dotnet test  Ambev.DeveloperEvaluation.sln --no-restore --verbosity normal \
 /p:CollectCoverage=true \
 /p:CoverletOutputFormat=cobertura \
-/p:CoverletOutput=./TestResults/coverage.cobertura.xml
+/p:CoverletOutput=./TestResults/coverage.cobertura.xml \
+/p:ExcludeByFile="**/Migrations/*.cs%2c**/Program.cs" \
 
 echo "Generate coverage report"
 reportgenerator \
