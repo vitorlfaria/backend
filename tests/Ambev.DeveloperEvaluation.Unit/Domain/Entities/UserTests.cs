@@ -29,6 +29,23 @@ public class UserTests
     }
 
     /// <summary>
+    /// Tests that when a active user is deactivated, their status changes to Inactive.
+    /// </summary>
+    [Fact(DisplayName = "User status should change to Inactive when deactivated")]
+    public void Given_ActiveUser_When_Deactivated_Then_StatusShouldBeInactive()
+    {
+        // Arrange
+        var user = UserTestData.GenerateValidUser();
+        user.Status = UserStatus.Active;
+
+        // Act
+        user.Deactivate();
+
+        // Assert
+        Assert.Equal(UserStatus.Inactive, user.Status);
+    }
+
+    /// <summary>
     /// Tests that when an active user is suspended, their status changes to Suspended.
     /// </summary>
     [Fact(DisplayName = "User status should change to Suspended when suspended")]
@@ -85,5 +102,29 @@ public class UserTests
         // Assert
         Assert.False(result.IsValid);
         Assert.NotEmpty(result.Errors);
+    }
+
+    /// <summary>
+    /// Tests that the user is created with the current Id, Username and Role.
+    /// </summary>
+    [Fact(DisplayName = "User should be created with current Id, Username and Role")]
+    public void Given_User_When_Created_Then_ShouldHaveCurrentIdUsernameAndRole()
+    {
+        // Arrange
+        var id = Guid.NewGuid();
+        var username = "TestUser";
+        var role = UserRole.Customer;
+        var user = UserTestData.GenerateValidUser();
+        user.Id = id;
+        user.Username = username;
+        user.Role = role;
+
+        // Act
+        var result = user.Validate();
+
+        // Assert
+        Assert.Equal(user.Id, id);
+        Assert.Equal(user.Username, username);
+        Assert.Equal(user.Role, role);
     }
 }

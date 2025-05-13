@@ -1,13 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Security;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ambev.DeveloperEvaluation.IoC.ModuleInitializers;
 
 public class ApplicationModuleInitializer : IModuleInitializer
 {
-    public void Initialize(WebApplicationBuilder builder)
+    public void Initialize(IServiceCollection services)
     {
-        builder.Services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
+        services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
     }
 }
