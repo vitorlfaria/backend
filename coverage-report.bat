@@ -27,4 +27,4 @@ rmdir /s /q obj 2>nul
 
 echo.
 echo Coverage report generated at TestResults/CoverageReport/index.html
-pause
+start TestResults/CoverageReport/index.html

@@ -43,6 +43,14 @@ public class BCryptPasswordHasherTests
     [Fact(DisplayName = "Should verify a password against its hash")]
     public void VerifyPassword_ShouldReturnTrueForMatchingPassword()
     {
-        // Arrange & Act & Assert
+        // Arrange
+        var password = "testPassword";
+        var hashedPassword = _passwordHasher.HashPassword(password);
+
+        // Act
+        var isVerified = _passwordHasher.VerifyPassword(password, hashedPassword);
+
+        // Assert
+        Assert.True(isVerified);
     }
 }
