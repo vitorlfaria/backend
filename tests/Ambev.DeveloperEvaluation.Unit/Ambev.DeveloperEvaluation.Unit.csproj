@@ -41,4 +41,8 @@
 		<ProjectReference Include="..\..\src\Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="WebApi/Common/" />
+	</ItemGroup>
+
 </Project>
