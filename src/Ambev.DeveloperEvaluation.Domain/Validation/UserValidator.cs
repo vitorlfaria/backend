@@ -4,8 +4,17 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Validation;
 
+/// <summary>
+/// Validator class for User entity.
+/// </summary>
 public class UserValidator : AbstractValidator<User>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserValidator"/> class.
+    /// </summary>
+    /// <remarks>
+    /// This constructor sets up the validation rules for the User entity.
+    /// </remarks>
     public UserValidator()
     {
         RuleFor(user => user.Email).SetValidator(new EmailValidator());

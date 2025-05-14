@@ -1,6 +1,7 @@
-using System;
 using Ambev.DeveloperEvaluation.Common.Interfaces;
+using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -70,5 +71,33 @@ public class Sale : BaseEntity, ISale<SaleItem>
     List<SaleItem> ISale<SaleItem>.Products => SaleItems;
     bool ISale<SaleItem>.Canceled => Canceled;
     int ISale<SaleItem>.Number => Number;
+
+    /// <summary>
+    /// Perfoms validation of the sale entity using the SaleValidator rules.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="ValidationResultDetail"/> containing:
+    /// - IsValid: Indicates whether all validation rules passed
+    /// - Errors: Collection of validation errors if any rules failed
+    /// </returns>
+    /// <remarks>
+    /// <listheader>The validation includes checking:</listheader>
+    /// <list type="bullet">Customer ID not null or empty</list>
+    /// <list type="bullet">Branch ID not null or empty</list>
+    /// <list type="bullet">Sale date not null and not in the future</list>
+    /// <list type="bullet">Total amount greater than zero</list>
+    /// <list type="bullet">Sale items not null or empty</list>
+    /// <list type="bullet">All sale items have a quantity greater than zero</list>
+    /// </remarks>
+    public ValidationResultDetail Validate()
+    {
+        var validator = new SaleValidator();
+        var result = validator.Validate(this);
+        return new ValidationResultDetail
+        {
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(e => (ValidationErrorDetail)e)
+        };
+    }
 }
 
