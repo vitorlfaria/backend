@@ -9,17 +9,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 /// <typeparam name="T"></typeparam>
 public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T : class
 {
-    /// <summary>
-    /// Creates a new entity in the repository
-    /// </summary>
     protected readonly DbSet<T> _dbSet = context.Set<T>();
 
-    /// <summary>
-    /// Creates a new entity in the repository
-    /// </summary>
-    /// <param name="entity">The entity to create</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The created entity</returns>
     public async Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default)
     {
         await _dbSet.AddAsync(entity, cancellationToken);
@@ -27,13 +18,6 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         return entity;
     }
 
-    /// <summary>
-    /// Retrieves an entity by its unique identifier
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The entity if found, null otherwise</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the id is null</exception>
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         if (id == Guid.Empty)
@@ -43,13 +27,6 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         return await _dbSet.FindAsync([id], cancellationToken);
     }
 
-    /// <summary>
-    /// Deletes an entity from the repository
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity to delete</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>True if the entity was deleted, false if not found</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the entity is null</exception>
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         if (id == Guid.Empty)
@@ -68,15 +45,7 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         return true;
     }
 
-    /// <summary>
-    /// Retrieves all entities from the repository paginated
-    /// </summary>
-    /// <param name="pageNumber">The page number to retrieve</param>
-    /// <param name="pageSize">The number of entities per page</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>A list of entities for the specified page</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when page number or size is less than 1</exception>
-    public async Task<List<T>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<List<T>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
     {
         if (pageNumber < 1)
         {
@@ -89,6 +58,18 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         }
 
         return await _dbSet.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+    }
+
+    public Task<T> UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    {
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity), "Entity cannot be null");
+        }
+
+        _dbSet.Update(entity);
+        context.SaveChanges();
+        return Task.FromResult(entity);
     }
 
     /// <summary>

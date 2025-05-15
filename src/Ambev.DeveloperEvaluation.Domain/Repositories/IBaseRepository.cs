@@ -30,11 +30,20 @@ public interface IBaseRepository<T> : IDisposable where T : class
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Updates an existing entity in the repository
+    /// </summary>
+    /// <param name="entity">The entity to update</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated entity</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the entity is null</exception>
+    Task<T> UpdateAsync(T entity, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Retrieves all entities from the repository paginated
     /// </summary>
     /// <param name="pageNumber">The page number to retrieve</param>
     /// <param name="pageSize">The number of entities per page</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>A list of entities for the specified page</returns>
-    Task<List<T>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+    Task<List<T>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 }
