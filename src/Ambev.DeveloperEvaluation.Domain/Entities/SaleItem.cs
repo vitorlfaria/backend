@@ -1,11 +1,12 @@
 using System;
+using Ambev.DeveloperEvaluation.Domain.Common;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 /// <summary>
 /// Represents an item in a sale.
 /// </summary>
-public class SaleItem
+public class SaleItem : BaseEntity
 {
     /// <summary>
     /// Gets or sets the unique identifier of the product.
@@ -13,6 +14,13 @@ public class SaleItem
     /// Must not be null or empty.
     /// </summary>
     public Guid ProductId { get; set; } = Guid.Empty;
+
+    /// <summary>
+    /// Gets or sets the unique identifier of the sale.
+    /// This property is used to link the sale item to a specific sale in the system.
+    /// Must not be null or empty.
+    /// </summary>
+    public Guid SaleId { get; set; }
 
     /// <summary>
     /// Gets or sets the quantity of the product sold.
@@ -56,4 +64,10 @@ public class SaleItem
     /// This property is used to link the sale item to a specific product in the system.
     /// </summary>
     public virtual Product Product { get; set; } = new();
+
+    /// <summary>
+    /// Gets or sets the sale associated with the sale item.
+    /// This property is used to link the sale item to a specific sale in the system.
+    /// </summary>
+    public virtual Sale Sale { get; set; } = new();
 }

@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Common.HealthChecks;
+using Ambev.DeveloperEvaluation.Unit.Fixtures;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -10,22 +11,26 @@ namespace Ambev.DeveloperEvaluation.Unit.Common.HealthChecks;
 /// Contains unit tests for the HealthChecksExtension class.
 /// Tests cover adding and using basic health checks.
 /// </summary>
-public class HealthChecksExtensionTests
+public class HealthChecksExtensionTests : IClassFixture<WebApplicationFixture>
 {
+    private readonly WebApplicationFixture _fixture;
+
+    public HealthChecksExtensionTests(WebApplicationFixture fixture)
+    {
+        _fixture = fixture;
+    }
+
     /// <summary>
     /// Tests that basic health checks are added to the service collection.
     /// </summary>
     [Fact(DisplayName = "AddBasicHealthChecks should add health checks to services")]
     public void AddBasicHealthChecks_ShouldAddHealthChecksToServices()
     {
-        // Arrange
-        var builder = WebApplication.CreateBuilder();
-
         // Act
-        builder.AddBasicHealthChecks();
+        _fixture.Builder.AddBasicHealthChecks();
 
         // Assert
-        var services = builder.Services;
+        var services = _fixture.Builder.Services;
         var healthCheckServiceDescriptor = services.FirstOrDefault(s => s.ServiceType == typeof(HealthCheckService));
         Assert.NotNull(healthCheckServiceDescriptor);
         Assert.Equal(ServiceLifetime.Singleton, healthCheckServiceDescriptor.Lifetime);
@@ -38,9 +43,7 @@ public class HealthChecksExtensionTests
     public void AddBasicHealthChecks_ShouldAddHealthChecksToWebApplication()
     {
         // Arrange
-        var builder = WebApplication.CreateBuilder();
-        builder.AddBasicHealthChecks();
-        var app = builder.Build();
+        WebApplication app = _fixture.CreateWebApplication();
 
         // Act
         app.UseBasicHealthChecks();

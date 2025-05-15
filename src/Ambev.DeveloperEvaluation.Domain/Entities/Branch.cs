@@ -1,4 +1,3 @@
-using System;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Validation;
@@ -14,6 +13,12 @@ public class Branch : BaseEntity
     /// Gets or sets the name of the branch.
     /// </summary>
     public string Name { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Navigation property for the sales associated with this branch.
+    /// </summary>
+    public virtual List<Sale> Sales { get; set; }
+
 
     /// <summary>
     /// Perfoms validation of the branch entity using the BranchValidator rules.

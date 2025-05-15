@@ -1,7 +1,7 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Ambev.DeveloperEvaluation.Unit.Fixtures;
 using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.ORM.Repositories;
@@ -10,7 +10,7 @@ namespace Ambev.DeveloperEvaluation.Unit.ORM.Repositories;
 /// Contains unit tests for the UserRepository class.
 /// Tests cover user creation, retrieval, and deletion.
 /// </summary>
-public class UserRepositoryTests
+public class UserRepositoryTests : IClassFixture<DbContextFixture>
 {
     private readonly UserRepository _userRepository;
     private readonly DefaultContext _context;
@@ -19,12 +19,10 @@ public class UserRepositoryTests
     /// Initializes a new instance of the <see cref="UserRepositoryTests"/> class.
     /// Sets up an in-memory database context and a UserRepository instance for testing.
     /// </summary>
-    public UserRepositoryTests()
+    public UserRepositoryTests(DbContextFixture fixture)
     {
-        var options = new DbContextOptionsBuilder<DefaultContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
-        _context = new DefaultContext(options);
+        _context = fixture.Context;
+        _context.Database.EnsureCreated();
         _userRepository = new UserRepository(_context);
     }
 
