@@ -29,6 +29,11 @@ public class Sale : BaseEntity, ISale<SaleItem>
     public Guid CustomerId { get; set; } = Guid.Empty;
 
     /// <summary>
+    /// Gets or sets the denormination of the customer associated with the sale.
+    /// </summary>
+    public string CustomerName { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the total amount of the sale.
     /// This property represents the total value of all products included in the sale.
     /// </summary>
@@ -41,6 +46,11 @@ public class Sale : BaseEntity, ISale<SaleItem>
     public Guid BranchId { get; set; } = Guid.Empty;
 
     /// <summary>
+    /// Gets or sets the denormination of the branch where the sale was made.
+    /// </summary>
+    public string BranchName { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the list of product identifiers included in the sale.
     /// This property is used to track the products that were sold in this transaction.
     /// </summary>
@@ -50,18 +60,6 @@ public class Sale : BaseEntity, ISale<SaleItem>
     /// Gets or sets a flag indicating whether the sale is canceled.
     /// </summary>
     public bool Canceled { get; set; }
-
-    /// <summary>
-    /// Gets or sets the customer associated with the sale.
-    /// This property is used to link the sale to a specific customer in the system.
-    /// </summary>
-    public virtual User Customer { get; set; } = new();
-
-    /// <summary>
-    /// Gets or sets the branch where the sale was made.
-    /// This property is used to associate the sale with a specific branch location in the system.
-    /// </summary>
-    public virtual Branch Branch { get; set; } = new();
 
     string ISale<SaleItem>.Id => Id.ToString();
     DateTime ISale<SaleItem>.SaleDate => SaleDate;

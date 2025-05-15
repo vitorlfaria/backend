@@ -15,4 +15,16 @@ public class SaleRepository(DefaultContext context) : BaseRepository<Sale>(conte
 
         return _dbSet.FirstOrDefaultAsync(s => s.Number == number, cancellationToken);
     }
+
+    public override async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        if (id == Guid.Empty)
+        {
+            throw new ArgumentNullException(nameof(id), "Id cannot be empty");
+        }
+
+        return await _dbSet
+            .Include(s => s.SaleItems)
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+    }
 }

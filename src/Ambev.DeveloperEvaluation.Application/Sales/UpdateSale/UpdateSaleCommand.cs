@@ -29,6 +29,11 @@ public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     public Guid CustomerId { get; set; }
 
     /// <summary>
+    /// Gets or sets the denormalized customer name associated with the sale.
+    /// </summary>
+    public string CustomerName { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the new total amount of the sale.
     /// </summary>
     public decimal TotalAmount { get; set; }
@@ -37,6 +42,11 @@ public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     /// Gets or sets the new unique identifier of the branch where the sale was made.
     /// </summary>
     public Guid BranchId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the denormalized branch name where the sale was made.
+    /// </summary>
+    public string BranchName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the new list of product identifiers included in the sale.

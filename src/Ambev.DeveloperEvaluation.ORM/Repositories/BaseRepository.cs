@@ -18,7 +18,7 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         return entity;
     }
 
-    public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         if (id == Guid.Empty)
         {

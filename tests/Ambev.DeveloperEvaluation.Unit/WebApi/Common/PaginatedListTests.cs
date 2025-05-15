@@ -1,5 +1,5 @@
+using Ambev.DeveloperEvaluation.Application.Common;
 using Ambev.DeveloperEvaluation.Unit.TestExtensions;
-using Ambev.DeveloperEvaluation.WebApi.Common;
 using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.WebApi.Common;

@@ -17,19 +17,12 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(s => s.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(s => s.Canceled).IsRequired();
         builder.Property(s => s.BranchId).IsRequired();
-
-        builder.HasOne(s => s.Branch)
-            .WithMany(b => b.Sales)
-            .HasForeignKey(s => s.BranchId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasOne(s => s.Customer)
-            .WithMany()
-            .HasForeignKey(s => s.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(s => s.BranchName).IsRequired().HasMaxLength(255);
+        builder.Property(s => s.CustomerId).IsRequired();
+        builder.Property(s => s.CustomerName).IsRequired().HasMaxLength(255);
 
         builder.HasMany(s => s.SaleItems)
             .WithOne()
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(si => si.SaleId);
     }
 }

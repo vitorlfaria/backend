@@ -6,7 +6,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 /// <summary>
 /// Represents an item in a sale.
 /// </summary>
-public class SaleItem : BaseEntity
+public class SaleItem
 {
     /// <summary>
     /// Gets or sets the unique identifier of the product.
@@ -56,18 +56,4 @@ public class SaleItem : BaseEntity
     {
         TotalPrice = UnitPrice * Quantity * (1 - (Discount / 100m));
     }
-
-    // Navigation properties
-
-    /// <summary>
-    /// Gets or sets the product associated with the sale item.
-    /// This property is used to link the sale item to a specific product in the system.
-    /// </summary>
-    public virtual Product Product { get; set; } = new();
-
-    /// <summary>
-    /// Gets or sets the sale associated with the sale item.
-    /// This property is used to link the sale item to a specific sale in the system.
-    /// </summary>
-    public virtual Sale Sale { get; set; } = new();
 }

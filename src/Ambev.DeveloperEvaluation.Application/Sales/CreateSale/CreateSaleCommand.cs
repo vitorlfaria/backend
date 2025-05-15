@@ -24,6 +24,11 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
     public Guid CustomerId { get; set; }
 
     /// <summary>
+    /// Gets or sets the denormination of the customer associated with the sale.
+    /// </summary>
+    public string CustomerName { get; set; }
+
+    /// <summary>
     /// Gets or sets the total amount of the sale.
     /// </summary>
     public decimal TotalAmount { get; set; }
@@ -34,9 +39,14 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
     public Guid BranchId { get; set; }
 
     /// <summary>
+    /// Gets or sets the denormination of the branch where the sale was made.
+    /// </summary>
+    public string BranchName { get; set; }
+
+    /// <summary>
     /// Gets or sets the list of product identifiers included in the sale.
     /// </summary>
-    public List<CreateSaleItemCommand> SaleItems { get; set; } = [];
+    public List<SaleItemDto> SaleItems { get; set; } = [];
 
     /// <summary>
     /// Gets or sets a flag indicating whether the sale is canceled.
@@ -59,7 +69,7 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
     }
 }
 
-public class CreateSaleItemCommand
+public class SaleItemDto
 {
     public Guid ProductId { get; set; }
     public int Quantity { get; set; }

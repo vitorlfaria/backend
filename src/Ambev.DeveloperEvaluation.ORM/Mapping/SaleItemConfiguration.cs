@@ -8,41 +8,14 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
 {
     public void Configure(EntityTypeBuilder<SaleItem> builder)
     {
-        builder.ToTable("SaleItems");
+        builder.ToTable("SaleItem");
 
-        builder.HasKey(si => si.Id);
-        builder.Property(si => si.Id)
-            .HasColumnType("uuid")
-            .HasDefaultValueSql("gen_random_uuid()");
-
-        builder.Property(si => si.SaleId)
-            .IsRequired()
-            .HasColumnType("uuid");
-
-        builder.Property(si => si.ProductId)
-            .IsRequired()
-            .HasColumnType("uuid");
-
-        builder.Property(si => si.Quantity)
-            .IsRequired()
-            .HasColumnType("int");
-
-        builder.Property(si => si.UnitPrice)
-            .IsRequired()
-            .HasColumnType("decimal(18,2)");
-
-        builder.Property(si => si.TotalPrice)
-            .IsRequired()
-            .HasColumnType("decimal(18,2)");
-
-        builder.HasOne(si => si.Sale)
-            .WithMany(s => s.SaleItems)
-            .HasForeignKey(si => si.SaleId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        builder.HasOne(si => si.Product)
-            .WithMany()
-            .HasForeignKey(si => si.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasKey("SaleId", "ProductId");
+        builder.Property(x => x.SaleId).IsRequired();
+        builder.Property(x => x.ProductId).IsRequired();
+        builder.Property(x => x.Quantity).IsRequired();
+        builder.Property(x => x.UnitPrice).IsRequired();
+        builder.Property(x => x.Discount).IsRequired();
+        builder.Property(x => x.TotalPrice).IsRequired();
     }
 }

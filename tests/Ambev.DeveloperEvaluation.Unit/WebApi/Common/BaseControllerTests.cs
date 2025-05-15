@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Common;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
