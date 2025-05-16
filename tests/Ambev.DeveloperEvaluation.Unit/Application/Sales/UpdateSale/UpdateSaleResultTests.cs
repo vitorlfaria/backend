@@ -52,14 +52,31 @@ public class UpdateSaleResultTests
         Assert.Equal(saleDate, result.SaleDate);
     }
 
-    // You can add more tests here to cover other properties of UpdateSaleResult,
-    // such as CustomerId, TotalAmount, BranchId, and Canceled.
-    // [Fact(DisplayName = "CustomerId property should be initialized correctly")]
-    // public void Given_UpdateSaleResult_When_CustomerIdIsSet_Then_CustomerIdShouldBeCorrect() { /* ... */ }
-    // [Fact(DisplayName = "TotalAmount property should be initialized correctly")]
-    // public void Given_UpdateSaleResult_When_TotalAmountIsSet_Then_TotalAmountShouldBeCorrect() { /* ... */ }
-    // [Fact(DisplayName = "BranchId property should be initialized correctly")]
-    // public void Given_UpdateSaleResult_When_BranchIdIsSet_Then_BranchIdShouldBeCorrect() { /* ... */ }
-    // [Fact(DisplayName = "Canceled property should be initialized correctly")]
-    // public void Given_UpdateSaleResult_When_CanceledIsSet_Then_CanceledShouldBeCorrect() { /* ... */ }
+    /// <summary>
+    /// Tests that UpdateDaleItemResult is correctly initialized.
+    /// </summary>
+    [Fact(DisplayName = "UpdateSaleItemResult should be initialized correctly")]
+    public void Given_UpdateSaleItemResult_When_Initialized_Then_ShouldHaveCorrectProperties()
+    {
+        // Arrange
+        var productId = Guid.NewGuid();
+        var quantity = 10;
+        var unitPrice = 19.99m;
+        var discount = 10;
+        var itemResult = new UpdateSaleItemResult
+        {
+            ProductId = productId,
+            Quantity = quantity,
+            UnitPrice = unitPrice,
+            Discount = discount
+        };
+
+        // Act & Assert
+        Assert.Multiple(
+            () => Assert.Equal(productId, itemResult.ProductId),
+            () => Assert.Equal(quantity, itemResult.Quantity),
+            () => Assert.Equal(unitPrice, itemResult.UnitPrice),
+            () => Assert.Equal(discount, itemResult.Discount)
+        );
+    }
 }

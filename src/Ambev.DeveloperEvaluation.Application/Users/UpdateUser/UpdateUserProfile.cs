@@ -15,7 +15,9 @@ public class UpdateUserProfile : Profile
     {
         CreateMap<UpdateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore ID during update mapping
-            .ForMember(dest => dest.Password, opt => opt.Ignore()); // Never update password here
+            .ForMember(dest => dest.Password, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore()); // Never update password here
         CreateMap<User, UpdateUserResult>();
     }
 }
