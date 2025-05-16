@@ -41,12 +41,9 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
 
         var sale = _mapper.Map<Sale>(command);
 
-        if (sale.SaleItems != null)
+        foreach (var saleItem in sale.SaleItems)
         {
-            foreach (var saleItem in sale.SaleItems)
-            {
-                saleItem.CalculateTotalPrice();
-            }
+            saleItem.CalculateTotalPrice();
         }
 
         var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);

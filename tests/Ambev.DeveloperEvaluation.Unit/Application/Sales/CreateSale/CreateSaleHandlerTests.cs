@@ -6,10 +6,6 @@ using FluentAssertions;
 using FluentValidation;
 using NSubstitute;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.CreateSale;
 
@@ -130,8 +126,12 @@ public class CreateSaleHandlerTests
     {
         // Given
         var command = new CreateSaleCommand { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 100, BranchId = Guid.NewGuid(), SaleItems = [new SaleItemDto(){ ProductId = Guid.NewGuid(), Quantity = 1, UnitPrice = 50, Discount = 10 }], Canceled = false };
+        var sale = new Sale { Id = Guid.NewGuid(), Number = command.Number, SaleDate = command.SaleDate, CustomerId = command.CustomerId, TotalAmount = command.TotalAmount, BranchId = command.BranchId, SaleItems = command.SaleItems.ConvertAll(item => new SaleItem { ProductId = item.ProductId, Quantity = item.Quantity, UnitPrice = item.UnitPrice, Discount = item.Discount }), Canceled = command.Canceled };
+        _mapper.Map<Sale>(command).Returns(sale);
+
         // When
         await _handler.Handle(command, CancellationToken.None);
+
         // Then
         await _saleRepository.Received(1).CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>());
     }
