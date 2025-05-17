@@ -21,6 +21,8 @@ public class CreateSaleProfile : Profile
             .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
             .ForMember(dest => dest.SaleId, opt => opt.Ignore());
 
+        CreateMap<SaleItem, SaleItemDto>();
+
         CreateMap<Sale, CreateSaleResult>();
     }
 }

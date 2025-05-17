@@ -49,4 +49,9 @@ public class CreateSaleResult
     /// Gets or sets a flag indicating whether the created sale is canceled.
     /// </summary>
     public bool Canceled { get; set; }
+
+    /// <summary>
+    /// Gets or sets the list of items associated with the created sale.
+    /// </summary>
+    public List<SaleItemDto> SaleItems { get; set; } = [];
 }

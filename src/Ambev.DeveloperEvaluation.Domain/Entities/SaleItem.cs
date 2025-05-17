@@ -1,5 +1,6 @@
 using System;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -54,6 +55,27 @@ public class SaleItem
     /// </remarks>
     public void CalculateTotalPrice()
     {
+        CalculateDiscount();
         TotalPrice = UnitPrice * Quantity * (1 - (Discount / 100m));
+    }
+
+    /// <summary>
+    /// Calculates the discount percentage based on the quantity of items purchased.
+    /// </summary>
+    /// <remarks>
+    /// The discount is calculated as follows:
+    /// - Purchases above 4 identical items have a 10% discount
+    /// - Purchases between 10 and 20 identical items have a 20% discount
+    /// - It's not possible to sell above 20 identical items
+    /// - Purchases below 4 items cannot have a discount
+    /// </remarks>
+    private void CalculateDiscount()
+    {
+        if (Quantity >= 10 && Quantity <= 20)
+            Discount = 20;
+        else if (Quantity > 4)
+            Discount = 10;
+        else
+            Discount = 0;
     }
 }

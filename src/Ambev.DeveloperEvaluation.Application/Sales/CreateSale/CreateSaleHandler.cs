@@ -3,6 +3,7 @@ using MediatR;
 using FluentValidation;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
@@ -43,6 +44,11 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
 
         foreach (var saleItem in sale.SaleItems)
         {
+            var saleItemValidator = new SaleItemValidator();
+            var saleItemValidationResult = await saleItemValidator.ValidateAsync(saleItem, cancellationToken);
+            if (!saleItemValidationResult.IsValid)
+                throw new ValidationException(saleItemValidationResult.Errors);
+
             saleItem.CalculateTotalPrice();
         }
 
