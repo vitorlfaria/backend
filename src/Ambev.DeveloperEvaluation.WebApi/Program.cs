@@ -54,7 +54,6 @@ public class Program
 
             var app = builder.Build();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseMiddleware<ValidationExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
