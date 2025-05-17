@@ -26,6 +26,11 @@ public class GetPaginatedSalesResult
     public Guid CustomerId { get; set; }
 
     /// <summary>
+    /// The denormilized name of the customer associated with the sale.
+    /// </summary>
+    public string CustomerName { get; set; } = string.Empty;
+
+    /// <summary>
     /// The total amount of the sale.
     /// </summary>
     public decimal TotalAmount { get; set; }
@@ -34,6 +39,11 @@ public class GetPaginatedSalesResult
     /// The unique identifier of the branch where the sale was made.
     /// </summary>
     public Guid BranchId { get; set; }
+
+    /// <summary>
+    /// The denormilized name of the branch where the sale was made.
+    /// </summary>
+    public string BranchName { get; set; } = string.Empty;
 
     /// <summary>
     /// Indicates whether the sale is canceled.

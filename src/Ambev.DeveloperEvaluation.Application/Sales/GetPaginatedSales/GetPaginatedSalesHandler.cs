@@ -32,8 +32,9 @@ public class GetPaginatedSalesHandler : IRequestHandler<GetPaginatedSalesCommand
     /// <returns>A paginated list of sale details.</returns>
     public async Task<PaginatedList<GetPaginatedSalesResult>> Handle(GetPaginatedSalesCommand request, CancellationToken cancellationToken)
     {
+        var totalCount = await _saleRepository.CountAsync(cancellationToken);
         var sales = await _saleRepository.GetPaginatedAsync(request.PageNumber, request.PageSize, cancellationToken);
         var result = sales.ConvertAll(sale => _mapper.Map<GetPaginatedSalesResult>(sale));
-        return new PaginatedList<GetPaginatedSalesResult>(result, sales.Count, request.PageNumber, request.PageSize);
+        return new PaginatedList<GetPaginatedSalesResult>(result, totalCount, request.PageNumber, request.PageSize);
     }
 }

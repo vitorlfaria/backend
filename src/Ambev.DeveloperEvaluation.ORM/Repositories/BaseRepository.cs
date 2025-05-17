@@ -72,6 +72,11 @@ public class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T :
         return Task.FromResult(entity);
     }
 
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.CountAsync(cancellationToken);
+    }
+
     /// <summary>
     /// Disposes the repository
     /// </summary>

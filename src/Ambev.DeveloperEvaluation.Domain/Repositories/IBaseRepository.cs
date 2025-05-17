@@ -46,4 +46,11 @@ public interface IBaseRepository<T> : IDisposable where T : class
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>A list of entities for the specified page</returns>
     Task<List<T>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves the count of entities in the repository
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The count of entities</returns>
+    Task<int> CountAsync(CancellationToken cancellationToken = default);
 }
