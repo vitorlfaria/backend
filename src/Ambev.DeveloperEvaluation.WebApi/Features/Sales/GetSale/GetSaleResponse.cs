@@ -1,9 +1,9 @@
-namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 
 /// <summary>
-/// Response model for GetSale operation.
+/// API response model for GetSale operation.
 /// </summary>
-public class GetSaleResult
+public class GetSaleResponse
 {
     /// <summary>
     /// The unique identifier of the sale.
@@ -26,9 +26,9 @@ public class GetSaleResult
     public Guid CustomerId { get; set; }
 
     /// <summary>
-    /// The denormilized name of the customer associated with the sale.
+    /// The name of the customer associated with the sale.
     /// </summary>
-    public string CustomerName { get; set; }
+    public string CustomerName { get; set; } = string.Empty;
 
     /// <summary>
     /// The total amount of the sale.
@@ -41,9 +41,9 @@ public class GetSaleResult
     public Guid BranchId { get; set; }
 
     /// <summary>
-    /// The denormilized name of the branch where the sale was made.
+    /// The name of the branch where the sale was made.
     /// </summary>
-    public string BranchName { get; set; }
+    public string BranchName { get; set; } = string.Empty;
 
     /// <summary>
     /// Indicates whether the sale is canceled.

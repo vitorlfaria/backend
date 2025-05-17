@@ -1,9 +1,9 @@
-namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 
 /// <summary>
-/// Represents the result of an update sale operation.
+/// API response model for UpdateSale operation
 /// </summary>
-public class UpdateSaleResult
+public class UpdateSaleResponse
 {
     /// <summary>
     /// Gets or sets the ID of the updated sale.
@@ -26,9 +26,9 @@ public class UpdateSaleResult
     public Guid CustomerId { get; set; }
 
     /// <summary>
-    /// Gets or sets the denormilized name of the customer associated with the updated sale.
+    /// Gets or sets the name of the customer associated with the updated sale.
     /// </summary>
-    public string CustomerName { get; set; }
+    public string CustomerName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the total amount of the updated sale.
@@ -41,9 +41,9 @@ public class UpdateSaleResult
     public Guid BranchId { get; set; }
 
     /// <summary>
-    /// Gets or sets the denormilized name of the branch where the updated sale was made.
+    /// Gets or sets the name of the branch where the updated sale was made.
     /// </summary>
-    public string BranchName { get; set; }
+    public string BranchName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets a flag indicating whether the updated sale is canceled.
