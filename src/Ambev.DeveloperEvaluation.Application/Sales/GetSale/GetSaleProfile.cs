@@ -13,6 +13,7 @@ public class GetSaleProfile : Profile
     /// </summary>
     public GetSaleProfile()
     {
+        CreateMap<SaleItem, GetSaleItemResult>();
         CreateMap<Sale, GetSaleResult>();
     }
 }

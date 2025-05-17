@@ -49,4 +49,40 @@ public class GetSaleResult
     /// Indicates whether the sale is canceled.
     /// </summary>
     public bool Canceled { get; set; }
+
+    /// <summary>
+    /// The list of items associated with the sale.
+    /// </summary>
+    public List<GetSaleItemResult> SaleItems { get; set; } = new();
+}
+
+/// <summary>
+/// Represents an item in a sale.
+/// </summary>
+public class GetSaleItemResult
+{
+    /// <summary>
+    /// The sale identifier.
+    /// </summary>
+    public Guid SaleId { get; set; }
+
+    /// <summary>
+    /// The unique identifier of the product associated with the sale item.
+    /// </summary>
+    public Guid ProductId { get; set; }
+
+    /// <summary>
+    /// The quantity of the product sold.
+    /// </summary>
+    public int Quantity { get; set; }
+
+    /// <summary>
+    /// The unit price of the product.
+    /// </summary>
+    public decimal UnitPrice { get; set; }
+
+    /// <summary>
+    /// The discount applied to the product.
+    /// </summary>
+    public decimal Discount { get; set; }
 }
