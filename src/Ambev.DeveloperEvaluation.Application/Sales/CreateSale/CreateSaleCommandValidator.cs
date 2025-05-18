@@ -26,10 +26,6 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
             .NotEmpty()
             .WithMessage("Customer ID is required.");
 
-        RuleFor(command => command.TotalAmount)
-            .GreaterThan(0)
-            .WithMessage("Total amount must be greater than zero.");
-
         RuleFor(command => command.BranchId)
             .NotEmpty()
             .WithMessage("Branch ID is required.");
@@ -44,6 +40,10 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
                 items.RuleFor(item => item.ProductId)
                     .NotEmpty()
                     .WithMessage("Product ID is required for each sale item.");
+
+                items.RuleFor(item => item.ProductName)
+                    .NotEmpty()
+                    .WithMessage("Product name is required for each sale item.");
 
                 items.RuleFor(item => item.Quantity)
                     .GreaterThan(0)

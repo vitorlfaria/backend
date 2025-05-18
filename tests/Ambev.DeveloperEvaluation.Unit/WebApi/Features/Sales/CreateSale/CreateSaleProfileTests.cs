@@ -33,7 +33,7 @@ public class CreateSaleProfileTests
         // Arrange
         var config = new MapperConfiguration(cfg => cfg.AddProfile<DeveloperEvaluation.WebApi.Features.Sales.CreateSale.CreateSaleProfile>());
         var mapper = config.CreateMapper();
-        var request = new CreateSaleRequest { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), CustomerName = "Test Customer", TotalAmount = 100.00m, BranchId = Guid.NewGuid(), BranchName = "Test Branch", SaleItems = [] };
+        var request = new CreateSaleRequest { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), CustomerName = "Test Customer", BranchId = Guid.NewGuid(), BranchName = "Test Branch", SaleItems = [] };
 
         // Act
         var command = mapper.Map<CreateSaleCommand>(request);
@@ -43,7 +43,6 @@ public class CreateSaleProfileTests
         Assert.Equal(request.SaleDate, command.SaleDate);
         Assert.Equal(request.CustomerId, command.CustomerId);
         Assert.Equal(request.CustomerName, command.CustomerName);
-        Assert.Equal(request.TotalAmount, command.TotalAmount);
         Assert.Equal(request.BranchId, command.BranchId);
         Assert.Equal(request.BranchName, command.BranchName);
         Assert.NotNull(command.SaleItems);

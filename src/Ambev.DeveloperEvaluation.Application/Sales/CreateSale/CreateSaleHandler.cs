@@ -52,6 +52,8 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
             saleItem.CalculateTotalPrice();
         }
 
+        sale.CalculateTotals();
+
         var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
         var result = _mapper.Map<CreateSaleResult>(createdSale);
         return result;

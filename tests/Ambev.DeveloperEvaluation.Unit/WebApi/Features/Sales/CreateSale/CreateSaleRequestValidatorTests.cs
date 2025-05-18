@@ -34,10 +34,9 @@ public class CreateSaleRequestValidatorTests
             SaleDate = DateTime.UtcNow,
             CustomerId = Guid.NewGuid(),
             CustomerName = "Test Customer",
-            TotalAmount = 100.00m,
             BranchId = Guid.NewGuid(),
             BranchName = "Test Branch",
-            SaleItems = [new SaleItemRequest { ProductId = Guid.NewGuid(), Quantity = 2, UnitPrice = 25.00m, Discount = 0 }]
+            SaleItems = [new SaleItemRequest { ProductId = Guid.NewGuid(), ProductName = "Test Product", Quantity = 2, UnitPrice = 25.00m }]
         };
 
         // Act
@@ -87,23 +86,4 @@ public class CreateSaleRequestValidatorTests
         // Act & Assert
         _validator.TestValidate(request).ShouldHaveValidationErrorFor(r => r.CustomerId);
     }
-
-    /// <summary>
-    /// Tests that validation fails when the total amount is invalid.
-    /// </summary>
-    [Theory(DisplayName = "Validation should fail for invalid total amount")]
-    [InlineData(0)]
-    [InlineData(-1)]
-    public void Given_InvalidTotalAmount_When_Validated_Then_ShouldHaveValidationErrorForTotalAmount(decimal amount)
-    {
-        // Arrange
-        var request = new CreateSaleRequest { TotalAmount = amount };
-
-        // Act & Assert
-        _validator.TestValidate(request).ShouldHaveValidationErrorFor(r => r.TotalAmount);
-    }
-
-    // Additional tests can be added for BranchId and SaleItems properties
-    // Following the same pattern as above, create tests for invalid scenarios
-    // for each property to ensure the validator behaves as expected.
 }

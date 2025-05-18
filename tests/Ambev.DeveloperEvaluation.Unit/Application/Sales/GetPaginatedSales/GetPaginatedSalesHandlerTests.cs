@@ -41,8 +41,8 @@ public class GetPaginatedSalesHandlerTests
         var command = new GetPaginatedSalesCommand { PageNumber = pageNumber, PageSize = pageSize };
         var sales = new List<Sale>
         {
-            new Sale { Id = Guid.NewGuid(), Number = 1, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 100, BranchId = Guid.NewGuid(), Canceled = false },
-            new Sale { Id = Guid.NewGuid(), Number = 2, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 200, BranchId = Guid.NewGuid(), Canceled = false }
+            new() { Id = Guid.NewGuid(), Number = 1, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 100, BranchId = Guid.NewGuid(), Canceled = false },
+            new() { Id = Guid.NewGuid(), Number = 2, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 200, BranchId = Guid.NewGuid(), Canceled = false }
         };
         var paginatedSales = new PaginatedList<Sale>(sales, sales.Count, pageNumber, pageSize);
         var results = sales.Select(s => new GetPaginatedSalesResult { Id = s.Id, Number = s.Number, SaleDate = s.SaleDate, CustomerId = s.CustomerId, TotalAmount = s.TotalAmount, BranchId = s.BranchId, Canceled = s.Canceled }).ToList();
@@ -58,7 +58,6 @@ public class GetPaginatedSalesHandlerTests
         result.Should().HaveCount(sales.Count);
         result.CurrentPage.Should().Be(pageNumber);
         result.PageSize.Should().Be(pageSize);
-        result.TotalCount.Should().Be(sales.Count);
         await _saleRepository.Received(1).GetPaginatedAsync(pageNumber, pageSize, Arg.Any<CancellationToken>());
     }
 

@@ -40,7 +40,6 @@ public class CreateSaleProfileTests
             Number = 12345,
             SaleDate = DateTime.UtcNow.AddDays(-1),
             CustomerId = Guid.NewGuid(),
-            TotalAmount = 100.50m,
             BranchId = Guid.NewGuid(),
             SaleItems = new List<SaleItemDto>
             {
@@ -57,7 +56,6 @@ public class CreateSaleProfileTests
         Assert.Equal(command.Number, sale.Number);
         Assert.Equal(command.SaleDate, sale.SaleDate);
         Assert.Equal(command.CustomerId, sale.CustomerId);
-        Assert.Equal(command.TotalAmount, sale.TotalAmount);
         Assert.Equal(command.BranchId, sale.BranchId);
         Assert.Equal(command.Canceled, sale.Canceled);
         Assert.Equal(command.SaleItems.Count, sale.SaleItems.Count);

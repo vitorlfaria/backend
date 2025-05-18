@@ -14,7 +14,9 @@ public class CreateSaleProfile : Profile
     public CreateSaleProfile()
     {
         CreateMap<CreateSaleRequest, CreateSaleCommand>();
-        CreateMap<SaleItemRequest, SaleItemDto>();
+        CreateMap<SaleItemRequest, SaleItemDto>()
+            .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
+            .ForMember(dest => dest.Discount, opt => opt.Ignore());
         CreateMap<CreateSaleResult, CreateSaleResponse>();
     }
 }

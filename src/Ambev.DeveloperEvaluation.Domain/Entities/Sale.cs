@@ -40,6 +40,12 @@ public class Sale : BaseEntity, ISale<SaleItem>
     public decimal TotalAmount { get; set; } = 0;
 
     /// <summary>
+    /// Gets or sets the total number of items sold in the sale.
+    /// This property represents the sum of the quantities of all products included in the sale.
+    /// </summary>
+    public int TotalItems { get; set; }
+
+    /// <summary>
     /// Gets or sets the unique identifier of the branch where the sale was made.
     /// This property is used to associate the sale with a specific branch location in the system.
     /// </summary>
@@ -69,6 +75,20 @@ public class Sale : BaseEntity, ISale<SaleItem>
     List<SaleItem> ISale<SaleItem>.Products => SaleItems;
     bool ISale<SaleItem>.Canceled => Canceled;
     int ISale<SaleItem>.Number => Number;
+
+    /// <summary>
+    /// Calculates the total amount of the sale based on the sale items.
+    /// </summary>
+    /// <remarks>
+    /// <listheader>The calculation includes:</listheader>
+    /// <list type="bullet">Total amount of all sale items</list>
+    /// <list type="bullet">Total number of items sold</list>
+    /// </remarks>
+    public void CalculateTotals()
+    {
+        TotalAmount = SaleItems.Sum(item => item.TotalPrice);
+        TotalItems = SaleItems.Sum(item => item.Quantity);
+    }
 
     /// <summary>
     /// Perfoms validation of the sale entity using the SaleValidator rules.

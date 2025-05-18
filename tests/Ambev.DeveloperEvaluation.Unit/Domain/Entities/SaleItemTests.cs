@@ -47,9 +47,9 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities
         {
             // Arrange
             var productId = Guid.NewGuid();
-            var quantity = 2;
+            var quantity = 5;
             var unitPrice = 50.00m;
-            var discount = 5;
+            var discount = 0;
 
             var saleItem = new SaleItem
             {
@@ -61,7 +61,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities
 
             // Act & Assert
             saleItem.CalculateTotalPrice();
-            saleItem.TotalPrice.Should().Be(95.00m); // (50.00 * 2) * (1 - 0.05) = 95.00
+            saleItem.TotalPrice.Should().Be(225.00m); // (50.00 * 2) * (1 - 0.05) = 95.00
         }
     }
 }

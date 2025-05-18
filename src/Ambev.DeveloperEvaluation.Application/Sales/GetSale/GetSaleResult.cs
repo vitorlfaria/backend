@@ -36,6 +36,13 @@ public class GetSaleResult
     public decimal TotalAmount { get; set; }
 
     /// <summary>
+    /// The total number of items sold in the sale.
+    /// </summary>
+    public int TotalItems { get; set; }
+
+    /// MyProperty { get; set; }
+
+    /// <summary>
     /// The unique identifier of the branch where the sale was made.
     /// </summary>
     public Guid BranchId { get; set; }
@@ -70,6 +77,11 @@ public class GetSaleItemResult
     /// The unique identifier of the product associated with the sale item.
     /// </summary>
     public Guid ProductId { get; set; }
+
+    /// <summary>
+    /// The denormilized name of the product associated with the sale item.
+    /// </summary>
+    public string ProductName { get; set; }
 
     /// <summary>
     /// The quantity of the product sold.

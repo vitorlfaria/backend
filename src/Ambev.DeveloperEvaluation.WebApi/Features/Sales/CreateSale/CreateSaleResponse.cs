@@ -38,6 +38,11 @@ public class CreateSaleResponse
     public decimal TotalAmount { get; set; }
 
     /// <summary>
+    /// Gets or sets the total number of items sold in the created sale.
+    /// </summary>
+    public int TotalItems { get; set; }
+
+    /// <summary>
     /// Gets or sets the unique identifier of the branch where the created sale was made.
     /// </summary>
     public Guid BranchId { get; set; }

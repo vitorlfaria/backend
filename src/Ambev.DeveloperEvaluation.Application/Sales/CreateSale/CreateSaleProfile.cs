@@ -15,10 +15,13 @@ public class CreateSaleProfile : Profile
     {
         CreateMap<CreateSaleCommand, Sale>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.TotalItems, opt => opt.Ignore())
+            .ForMember(dest => dest.TotalAmount, opt => opt.Ignore())
             .ForMember(dest => dest.SaleItems, opt => opt.MapFrom(src => src.SaleItems));
 
         CreateMap<SaleItemDto, SaleItem>()
             .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
+            .ForMember(dest => dest.Discount, opt => opt.Ignore())
             .ForMember(dest => dest.SaleId, opt => opt.Ignore());
 
         CreateMap<SaleItem, SaleItemDto>();

@@ -26,10 +26,6 @@ public class CreateSaleRequestValidator : AbstractValidator<CreateSaleRequest>
             .NotEmpty()
             .WithMessage("Customer ID is required.");
 
-        RuleFor(sale => sale.TotalAmount)
-            .GreaterThan(0)
-            .WithMessage("Total amount must be greater than zero.");
-
         RuleFor(sale => sale.BranchId)
             .NotEmpty()
             .WithMessage("Branch ID is required.");
@@ -42,6 +38,10 @@ public class CreateSaleRequestValidator : AbstractValidator<CreateSaleRequest>
             .ChildRules(items =>
             {
                 items.RuleFor(item => item.ProductId)
+                    .NotEmpty()
+                    .WithMessage("Product ID is required for each sale item.");
+
+                items.RuleFor(item => item.ProductName)
                     .NotEmpty()
                     .WithMessage("Product ID is required for each sale item.");
 

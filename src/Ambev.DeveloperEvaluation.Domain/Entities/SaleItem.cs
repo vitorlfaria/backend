@@ -17,6 +17,13 @@ public class SaleItem
     public Guid ProductId { get; set; } = Guid.Empty;
 
     /// <summary>
+    /// Gets or sets the denormilized name of the product.
+    /// This property is used to display the product name in the system.
+    /// Must not be null or empty.
+    /// </summary>
+    public string ProductName { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the unique identifier of the sale.
     /// This property is used to link the sale item to a specific sale in the system.
     /// Must not be null or empty.

@@ -23,12 +23,11 @@ public class CreateSaleCommandTests
             Number = 12345,
             SaleDate = DateTime.UtcNow.AddDays(-1),
             CustomerId = Guid.NewGuid(),
-            TotalAmount = 100.50m,
             BranchId = Guid.NewGuid(),
             SaleItems = new List<SaleItemDto>
             {
-                new SaleItemDto { ProductId = Guid.NewGuid(), Quantity = 2, UnitPrice = 25.25m, Discount = 10 },
-                new SaleItemDto { ProductId = Guid.NewGuid(), Quantity = 1, UnitPrice = 50.00m, Discount = 5 }
+                new SaleItemDto { ProductId = Guid.NewGuid(), ProductName = "Product 1", Quantity = 2, UnitPrice = 25.25m, Discount = 10 },
+                new SaleItemDto { ProductId = Guid.NewGuid(), ProductName = "Product 2", Quantity = 1, UnitPrice = 50.00m, Discount = 5 }
             },
             Canceled = false
         };
@@ -53,7 +52,6 @@ public class CreateSaleCommandTests
             Number = 0, // Invalid: zero
             SaleDate = DateTime.UtcNow.AddDays(1), // Invalid: future date
             CustomerId = Guid.Empty, // Invalid: empty Guid
-            TotalAmount = 0, // Invalid: zero
             BranchId = Guid.Empty, // Invalid: empty Guid
             SaleItems = new List<SaleItemDto>(), // Invalid: empty list
             Canceled = false
@@ -79,7 +77,6 @@ public class CreateSaleCommandTests
             Number = 12345,
             SaleDate = DateTime.UtcNow.AddDays(-1),
             CustomerId = Guid.NewGuid(),
-            TotalAmount = 100.50m,
             BranchId = Guid.NewGuid(),
             SaleItems = new List<SaleItemDto>
             {

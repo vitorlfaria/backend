@@ -41,12 +41,11 @@ public class CreateSaleHandlerTests
             Number = 12345,
             SaleDate = DateTime.UtcNow.AddDays(-1),
             CustomerId = Guid.NewGuid(),
-            TotalAmount = 100.50m,
             BranchId = Guid.NewGuid(),
             SaleItems = new List<SaleItemDto>
             {
-                new SaleItemDto { ProductId = Guid.NewGuid(), Quantity = 2, UnitPrice = 25.25m, Discount = 10 },
-                new SaleItemDto { ProductId = Guid.NewGuid(), Quantity = 1, UnitPrice = 50.00m, Discount = 5 }
+                new SaleItemDto { ProductId = Guid.NewGuid(), ProductName = "Product 1", Quantity = 2, UnitPrice = 25.25m, Discount = 10 },
+                new SaleItemDto { ProductId = Guid.NewGuid(), ProductName = "Product 2", Quantity = 1, UnitPrice = 50.00m, Discount = 5 }
             },
             Canceled = false
         };
@@ -56,11 +55,11 @@ public class CreateSaleHandlerTests
             Number = command.Number,
             SaleDate = command.SaleDate,
             CustomerId = command.CustomerId,
-            TotalAmount = command.TotalAmount,
             BranchId = command.BranchId,
-            SaleItems = command.SaleItems.ConvertAll(item => new SaleItem { ProductId = item.ProductId, Quantity = item.Quantity, UnitPrice = item.UnitPrice, Discount = item.Discount }),
+            SaleItems = command.SaleItems.ConvertAll(item => new SaleItem { ProductId = item.ProductId, ProductName = item.ProductName, Quantity = item.Quantity, UnitPrice = item.UnitPrice, Discount = item.Discount }),
             Canceled = command.Canceled
         };
+        sale.CalculateTotals();
         var result = new CreateSaleResult { Id = sale.Id, Number = sale.Number, SaleDate = sale.SaleDate, CustomerId = sale.CustomerId, TotalAmount = sale.TotalAmount, BranchId = sale.BranchId, Canceled = sale.Canceled };
 
         _mapper.Map<Sale>(command).Returns(sale);
@@ -76,7 +75,6 @@ public class CreateSaleHandlerTests
         createSaleResult.Number.Should().Be(sale.Number);
         createSaleResult.SaleDate.Should().Be(sale.SaleDate);
         createSaleResult.CustomerId.Should().Be(sale.CustomerId);
-        createSaleResult.TotalAmount.Should().Be(sale.TotalAmount);
         createSaleResult.BranchId.Should().Be(sale.BranchId);
         createSaleResult.Canceled.Should().Be(sale.Canceled);
         await _saleRepository.Received(1).CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>());
@@ -105,7 +103,7 @@ public class CreateSaleHandlerTests
     public async Task Handle_ValidRequest_MapsCommandToSale()
     {
         // Given
-        var command = new CreateSaleCommand { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 100, BranchId = Guid.NewGuid(), SaleItems = [new SaleItemDto(){ ProductId = Guid.NewGuid(), Quantity = 1, UnitPrice = 50, Discount = 10 }], Canceled = false };
+        var command = new CreateSaleCommand { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), BranchId = Guid.NewGuid(), SaleItems = [new SaleItemDto(){ ProductId = Guid.NewGuid(), ProductName = "Product 1", Quantity = 1, UnitPrice = 50, Discount = 10 }], Canceled = false };
         var sale = new Sale();
 
         _mapper.Map<Sale>(command).Returns(sale);
@@ -125,8 +123,8 @@ public class CreateSaleHandlerTests
     public async Task Handle_ValidSale_CreatesSaleInRepository()
     {
         // Given
-        var command = new CreateSaleCommand { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), TotalAmount = 100, BranchId = Guid.NewGuid(), SaleItems = [new SaleItemDto(){ ProductId = Guid.NewGuid(), Quantity = 1, UnitPrice = 50, Discount = 10 }], Canceled = false };
-        var sale = new Sale { Id = Guid.NewGuid(), Number = command.Number, SaleDate = command.SaleDate, CustomerId = command.CustomerId, TotalAmount = command.TotalAmount, BranchId = command.BranchId, SaleItems = command.SaleItems.ConvertAll(item => new SaleItem { ProductId = item.ProductId, Quantity = item.Quantity, UnitPrice = item.UnitPrice, Discount = item.Discount }), Canceled = command.Canceled };
+        var command = new CreateSaleCommand { Number = 123, SaleDate = DateTime.UtcNow, CustomerId = Guid.NewGuid(), BranchId = Guid.NewGuid(), SaleItems = [new SaleItemDto(){ ProductId = Guid.NewGuid(), ProductName = "Product 1", Quantity = 1, UnitPrice = 50, Discount = 10 }], Canceled = false };
+        var sale = new Sale { Id = Guid.NewGuid(), Number = command.Number, SaleDate = command.SaleDate, CustomerId = command.CustomerId, TotalAmount = 1, BranchId = command.BranchId, SaleItems = command.SaleItems.ConvertAll(item => new SaleItem { ProductId = item.ProductId, Quantity = item.Quantity, UnitPrice = item.UnitPrice, Discount = item.Discount }), Canceled = command.Canceled };
         _mapper.Map<Sale>(command).Returns(sale);
 
         // When

@@ -29,11 +29,6 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
     public string CustomerName { get; set; }
 
     /// <summary>
-    /// Gets or sets the total amount of the sale.
-    /// </summary>
-    public decimal TotalAmount { get; set; }
-
-    /// <summary>
     /// Gets or sets the unique identifier of the branch where the sale was made.
     /// </summary>
     public Guid BranchId { get; set; }
@@ -72,6 +67,7 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
 public class SaleItemDto
 {
     public Guid ProductId { get; set; }
+    public string ProductName { get; set; }
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public int Discount { get; set; }

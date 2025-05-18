@@ -25,6 +25,14 @@ public class GetSaleResponseTests
         var branchId = Guid.NewGuid();
         var branchName = "Test Branch";
         var canceled = false;
+        var saleItems = new List<GetSaleItemResponse>(){
+            new() {
+                ProductId = Guid.NewGuid(),
+                ProductName = "Test Product",
+                Quantity = 2,
+                UnitPrice = 50.00m,
+            }
+        };
 
         // Act
         var response = new GetSaleResponse
@@ -37,7 +45,8 @@ public class GetSaleResponseTests
             TotalAmount = totalAmount,
             BranchId = branchId,
             BranchName = branchName,
-            Canceled = canceled
+            Canceled = canceled,
+            SaleItems = saleItems
         };
 
         // Assert
@@ -50,5 +59,6 @@ public class GetSaleResponseTests
         Assert.Equal(branchId, response.BranchId);
         Assert.Equal(branchName, response.BranchName);
         Assert.Equal(canceled, response.Canceled);
+        Assert.Equal(saleItems, response.SaleItems);
     }
 }

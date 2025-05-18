@@ -52,7 +52,6 @@ public class SalesControllerTests
             SaleDate = DateTime.UtcNow,
             CustomerId = Guid.NewGuid(),
             CustomerName = "Test Customer",
-            TotalAmount = 100.00m,
             BranchId = Guid.NewGuid(),
             BranchName = "Test Branch",
             SaleItems = []
