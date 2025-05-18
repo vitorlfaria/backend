@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Common.Interfaces;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Events.SaleEvents;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
@@ -88,6 +89,29 @@ public class Sale : BaseEntity, ISale<SaleItem>
     {
         TotalAmount = SaleItems.Sum(item => item.TotalPrice);
         TotalItems = SaleItems.Sum(item => item.Quantity);
+    }
+
+    public void Created()
+    {
+        AddDomainEvent(new SaleCreated(Id));
+    }
+
+    public void Modify()
+    {
+        AddDomainEvent(new SaleModified(Id));
+    }
+
+    public void Cancel()
+    {
+        Canceled = true;
+        AddDomainEvent(new SaleCanceled(Id));
+    }
+
+    public void ItemCanceled(Guid productId)
+    {
+        var item = SaleItems.FirstOrDefault(i => i.ProductId == productId);
+        SaleItems.Remove(item);
+        AddDomainEvent(new ItemCancelled(Id, item.ProductId));
     }
 
     /// <summary>
